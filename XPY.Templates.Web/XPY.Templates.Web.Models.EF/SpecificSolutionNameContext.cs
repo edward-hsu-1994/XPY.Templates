@@ -4,7 +4,7 @@ using System.Text;
 using Microsoft.EntityFrameworkCore;
 
 namespace $safeprojectname$ {
-    public partial class $ext_safeprojectname$Context : DbContext {
+    public partial class $lastnamespace$Context : DbContext {
 
     }
 }

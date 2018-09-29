@@ -16,7 +16,11 @@
   </TemplateData>
   <TemplateContent>
     <Project TargetFileName="XPY.Templates.Web.Logic.csproj" File="XPY.Templates.Web.Logic.csproj" ReplaceParameters="true">
-      <ProjectItem ReplaceParameters="true" TargetFileName="$ext_safeprojectname$Manager.cs">SpecificSolutionNameManager.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="$lastnamespace$Manager.cs">SpecificSolutionNameManager.cs</ProjectItem>
     </Project>
   </TemplateContent>
+  <WizardExtension>
+    <Assembly>XPY.Templates, Version=1.0.0.0, Culture=Neutral, PublicKeyToken=9e5054cc6db487b8</Assembly>
+    <FullClassName>XPY.Templates.Web.Wizard.WizardImplementation</FullClassName>
+  </WizardExtension>
 </VSTemplate>

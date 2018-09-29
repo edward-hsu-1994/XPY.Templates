@@ -22,9 +22,13 @@ namespace XPY.Templates.Web.Wizard {
 
         }
 
-        public void RunStarted(object automationObject, Dictionary<string, string> replacementsDictionary, WizardRunKind runKind, object[] customParams) {
-            replacementsDictionary["$lastnamespace$"] = replacementsDictionary["$safeprojectname$"].Split('.').Last();
-            replacementsDictionary["$safeclassname$"] = replacementsDictionary["$safeprojectname$"].Replace(".", "");
+        public void RunStarted(
+            object automationObject,
+            Dictionary<string, string> replacementsDictionary,
+            WizardRunKind runKind,
+            object[] customParams) {
+            replacementsDictionary["$lastnamespace$"] = replacementsDictionary["$ext_safeprojectname$"].Split('.').Last();
+            replacementsDictionary["$safeclassname$"] = replacementsDictionary["$ext_safeprojectname$"].Replace(".", "");
         }
 
         public bool ShouldAddProjectItem(string filePath) {

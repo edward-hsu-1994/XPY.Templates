@@ -4,12 +4,12 @@ using System.Text;
 using Microsoft.EntityFrameworkCore;
 
 namespace $safeprojectname$ {
-    public partial class $ext_safeprojectname$Context : DbContext {
-        public $ext_safeprojectname$Context() {
-        }
+    public partial class $lastnamespace$Context : DbContext {
+        public $lastnamespace$Context() {
+}
 
-        public $ext_safeprojectname$Context(DbContextOptions<$ext_safeprojectname$Context> options)
-            : base(options) {
-        }
-    }
+public $lastnamespace$Context(DbContextOptions<$lastnamespace$Context> options)
+        : base(options) {
+}
+}
 }

@@ -18,7 +18,7 @@
     <Project TargetFileName="XPY.Templates.Web.Base.csproj" File="XPY.Templates.Web.Base.csproj" ReplaceParameters="true">
       <Folder Name="Authorization" TargetFolderName="Authorization">
         <ProjectItem ReplaceParameters="true" TargetFileName="JwtAuthenticationExtension.cs">JwtAuthenticationExtension.cs</ProjectItem>
-        <ProjectItem ReplaceParameters="true" TargetFileName="$ext_safeprojectname$Token.cs">SpecificSolutionNameToken.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="$lastnamespace$Token.cs">SpecificSolutionNameToken.cs</ProjectItem>
       </Folder>
       <Folder Name="Mvc" TargetFolderName="Mvc">
         <ProjectItem ReplaceParameters="true" TargetFileName="BaseController.cs">BaseController.cs</ProjectItem>
@@ -34,4 +34,8 @@
       </Folder>
     </Project>
   </TemplateContent>
+  <WizardExtension>
+    <Assembly>XPY.Templates, Version=1.0.0.0, Culture=Neutral, PublicKeyToken=9e5054cc6db487b8</Assembly>
+    <FullClassName>XPY.Templates.Web.Wizard.WizardImplementation</FullClassName>
+  </WizardExtension>
 </VSTemplate>

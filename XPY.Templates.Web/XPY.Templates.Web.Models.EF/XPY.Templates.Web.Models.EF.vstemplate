@@ -17,9 +17,13 @@
   <TemplateContent>
     <Project TargetFileName="XPY.Templates.Web.Models.EF.csproj" File="XPY.Templates.Web.Models.EF.csproj" ReplaceParameters="true">
       <Folder Name="Partials" TargetFolderName="Partials">
-        <ProjectItem ReplaceParameters="true" TargetFileName="$ext_safeprojectname$Context.cs">SpecificSolutionNameContext.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="$lastnamespace$Context.cs">SpecificSolutionNameContext.cs</ProjectItem>
       </Folder>
-      <ProjectItem ReplaceParameters="true" TargetFileName="$ext_safeprojectname$Context.cs">SpecificSolutionNameContext.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="$lastnamespace$Context.cs">SpecificSolutionNameContext.cs</ProjectItem>
     </Project>
   </TemplateContent>
+  <WizardExtension>
+    <Assembly>XPY.Templates, Version=1.0.0.0, Culture=Neutral, PublicKeyToken=9e5054cc6db487b8</Assembly>
+    <FullClassName>XPY.Templates.Web.Wizard.WizardImplementation</FullClassName>
+  </WizardExtension>
 </VSTemplate>

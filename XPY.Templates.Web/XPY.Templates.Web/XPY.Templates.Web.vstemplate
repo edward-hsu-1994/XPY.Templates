@@ -27,4 +27,8 @@
       <ProjectItem ReplaceParameters="true" TargetFileName="Startup.cs">Startup.cs</ProjectItem>
     </Project>
   </TemplateContent>
+  <WizardExtension>
+    <Assembly>XPY.Templates, Version=1.0.0.0, Culture=Neutral, PublicKeyToken=9e5054cc6db487b8</Assembly>
+    <FullClassName>XPY.Templates.Web.Wizard.WizardImplementation</FullClassName>
+  </WizardExtension>
 </VSTemplate>

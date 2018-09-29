@@ -12,38 +12,38 @@ using $safeprojectname$.Models.EF;
 using XWidget.Web.Jwt;
 
 namespace $safeprojectname$.Controllers {
-    public class UserController : BaseController<$safeprojectname$Manager, $safeprojectname$Context> {
-        public UserController($safeprojectname$Manager manager) : base(manager) {
+    public class UserController : BaseController<$lastnamespace$Manager, $lastnamespace$Context> {
+    public UserController($lastnamespace$Manager manager) : base(manager) {
 
-        }
+    }
 
-        /// <summary>
-        /// 產生JWT範例
-        /// </summary>
-        /// <param name="userId">使用者唯一識別號</param>
-        /// <returns>JWT</returns>
-        private string BuildTokenSample(string userId) {
-            var tokenModel = new $safeprojectname$Token() {
-                Header = new DefaultJwtHeader() {
-                    Algorithm = SecurityAlgorithms.HmacSha256
-                },
+    /// <summary>
+    /// 產生JWT範例
+    /// </summary>
+    /// <param name="userId">使用者唯一識別號</param>
+    /// <returns>JWT</returns>
+    private string BuildTokenSample(string userId) {
+        var tokenModel = new $lastnamespace$Token() {
+            Header = new DefaultJwtHeader() {
+                Algorithm = SecurityAlgorithms.HmacSha256
+            },
                 Payload = new MvcIdentityPayload() {
                     Actor = userId,
                     Issuer = Startup.Configuration.GetSection("JWT:Issuer").Value,
                     Audience = Startup.Configuration.GetSection("JWT:Audience").Value,
                     Name = userId,
-                    Role = $safeprojectname$Token.Roles.Administrator,
-                    Subject = $safeprojectname$Token.Subjects.Login,
+                    Role = $lastnamespace$Token.Roles.Administrator,
+                    Subject = $lastnamespace$Token.Subjects.Login,
                     IssuedAt = DateTime.Now,
                     Expires = DateTime.Now.AddHours(12)
                 }
             };
 
-            var key = new SymmetricSecurityKey(Startup.Configuration.GetSection("JWT:SecureKey")
-                .Value.ToHash<MD5>()
-            );
+        var key = new SymmetricSecurityKey(Startup.Configuration.GetSection("JWT:SecureKey")
+            .Value.ToHash<MD5>()
+        );
 
-            return tokenModel.Sign(key);
-        }
+        return tokenModel.Sign(key);
     }
+}
 }
