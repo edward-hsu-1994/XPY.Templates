@@ -27,8 +27,32 @@ namespace XPY.Templates.Web.Wizard {
             Dictionary<string, string> replacementsDictionary,
             WizardRunKind runKind,
             object[] customParams) {
-            replacementsDictionary["$lastnamespace$"] = replacementsDictionary["$ext_safeprojectname$"].Split('.').Last();
-            replacementsDictionary["$safeclassname$"] = replacementsDictionary["$ext_safeprojectname$"].Replace(".", "");
+            if (replacementsDictionary.ContainsKey("$ext_safeprojectname$")) {
+                replacementsDictionary["$lastnamespace$"] = replacementsDictionary["$ext_safeprojectname$"].Split('.').Last();
+                replacementsDictionary["$safeclassname$"] = replacementsDictionary["$ext_safeprojectname$"].Replace(".", "");
+            } else {
+                replacementsDictionary["$lastnamespace$"] = replacementsDictionary["$safeprojectname$"].Split('.').Last();
+                replacementsDictionary["$safeclassname$"] = replacementsDictionary["$safeprojectname$"].Replace(".", "");
+            }
+
+            if (
+                replacementsDictionary.ContainsKey("$ext_safeprojectname$") &&
+                replacementsDictionary["$ext_safeprojectname$"] == replacementsDictionary["$safeprojectname$"]) {
+                var jwtConfigForm = new JWTConfigForm();
+                jwtConfigForm.ShowDialog();
+
+                replacementsDictionary["$issuer$"] = jwtConfigForm.Issuer.Text;
+                replacementsDictionary["$audience$"] = jwtConfigForm.Audience.Text;
+                replacementsDictionary["$securekey$"] = jwtConfigForm.SecureKey.Text;
+            }
+
+            switch (runKind) {
+                case WizardRunKind.AsMultiProject:
+
+                    break;
+                case WizardRunKind.AsNewProject:
+                    break;
+            }
         }
 
         public bool ShouldAddProjectItem(string filePath) {
