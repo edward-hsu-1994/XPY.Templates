@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28010.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XPY.Templates", "XPY.Templates\XPY.Templates.csproj", "{247E2825-AFC5-43E1-8FFC-2D7C5E1D0C48}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XPY.Templates.Web", "XPY.Templates.Web\XPY.Templates.Web.csproj", "{77D2715C-BE44-4A10-BCE7-AFF540BEB7C9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{247E2825-AFC5-43E1-8FFC-2D7C5E1D0C48}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{247E2825-AFC5-43E1-8FFC-2D7C5E1D0C48}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{247E2825-AFC5-43E1-8FFC-2D7C5E1D0C48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77D2715C-BE44-4A10-BCE7-AFF540BEB7C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77D2715C-BE44-4A10-BCE7-AFF540BEB7C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77D2715C-BE44-4A10-BCE7-AFF540BEB7C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77D2715C-BE44-4A10-BCE7-AFF540BEB7C9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

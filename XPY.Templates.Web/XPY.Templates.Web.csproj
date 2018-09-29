@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MinimumVisualStudioVersion>15.0</MinimumVisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectTypeGuids>{82b43b9b-a64c-4715-b499-d71e9ca2bd60};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>{77D2715C-BE44-4A10-BCE7-AFF540BEB7C9}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>XPY.Templates.Web</RootNamespace>
+    <AssemblyName>XPY.Templates.Web</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <GeneratePkgDefFile>false</GeneratePkgDefFile>
+    <IncludeAssemblyInVSIXContainer>false</IncludeAssemblyInVSIXContainer>
+    <IncludeDebugSymbolsInVSIXContainer>false</IncludeDebugSymbolsInVSIXContainer>
+    <IncludeDebugSymbolsInLocalVSIXDeployment>false</IncludeDebugSymbolsInLocalVSIXDeployment>
+    <CreateVsixContainer>false</CreateVsixContainer>
+    <DeployExtension>false</DeployExtension>
+    <DeployVSTemplates>false</DeployVSTemplates>
+    <CopyVsixManifestToOutput>false</CopyVsixManifestToOutput>
+    <CopyBuildOutputToOutputDirectory>false</CopyBuildOutputToOutputDirectory>
+    <CopyOutputSymbolsToOutputDirectory>false</CopyOutputSymbolsToOutputDirectory>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.VisualStudio.CoreUtility">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="XPY.Templates.Web.Models.EF\Partials\SpecificSolutionNameContext.cs" />
+    <None Include="XPY.Templates.Web.Models.EF\SpecificSolutionNameContext.cs" />
+    <None Include="XPY.Templates.Web.Logic\SpecificSolutionNameManager.cs" />
+    <None Include="XPY.Templates.Web.Base\Authorization\JwtAuthenticationExtension.cs" />
+    <None Include="XPY.Templates.Web.Base\Authorization\SpecificSolutionNameToken.cs" />
+    <None Include="XPY.Templates.Web.Base\Mvc\BaseController.cs" />
+    <None Include="XPY.Templates.Web.Base\Utilities\IgnoreLazyLoaderContractResolver.cs" />
+    <None Include="XPY.Templates.Web.Base\Utilities\Swagger\AuthorizeOperationFilter.cs" />
+    <None Include="XPY.Templates.Web.Base\Utilities\Swagger\FormFileOperationFilter.cs" />
+    <None Include="XPY.Templates.Web.Base\Utilities\Swagger\SummaryOperationFilterBase.cs" />
+    <None Include="XPY.Templates.Web.Base\Utilities\Swagger\SwaggerCustomExtension.cs" />
+    <None Include="XPY.Templates.Web\Controllers\UserController.cs" />
+    <None Include="XPY.Templates.Web\Program.cs" />
+    <None Include="XPY.Templates.Web\Startup.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="XPY.Templates.Web.ico" />
+    <None Include="XPY.Templates.Web\appsettings.Development.json" />
+    <None Include="XPY.Templates.Web\appsettings.json" />
+    <None Include="XPY.Templates.Web\Dockerfile" />
+  </ItemGroup>
+  <ItemGroup>
+    <VSTemplate Include="XPY.Templates.Web.vstemplate">
+      <OutputSubPath>Web</OutputSubPath>
+    </VSTemplate>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="XPY.Templates.Web\XPY.Templates.Web.csproj" />
+    <None Include="XPY.Templates.Web\XPY.Templates.Web.ico" />
+    <None Include="XPY.Templates.Web\XPY.Templates.Web.vstemplate" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="XPY.Templates.Web\wwwroot\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="XPY.Templates.Web.Base\XPY.Templates.Web.Base.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="XPY.Templates.Web.Base\XPY.Templates.Web.Base.vstemplate" />
+    <None Include="XPY.Templates.Web.Base\XPY.Templates.Web.Base.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="XPY.Templates.Web.Logic\XPY.Templates.Web.Logic.vstemplate" />
+    <None Include="XPY.Templates.Web.Logic\XPY.Templates.Web.Logic.csproj" />
+    <None Include="XPY.Templates.Web.Logic\XPY.Templates.Web.Logic.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="XPY.Templates.Web.Models.EF\XPY.Templates.Web.Models.EF.vstemplate" />
+    <None Include="XPY.Templates.Web.Models.EF\XPY.Templates.Web.Models.EF.csproj" />
+    <None Include="XPY.Templates.Web.Models.EF\XPY.Templates.Web.Models.EF.ico" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

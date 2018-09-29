@@ -1,0 +1,22 @@
+<VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
+  <TemplateData>
+    <Name>XPY.Templates.Web.Logic</Name>
+    <Description>基本XWidget.EFLogic專案</Description>
+    <ProjectType>CSharp</ProjectType>
+    <ProjectSubType>
+    </ProjectSubType>
+    <SortOrder>1000</SortOrder>
+    <CreateNewFolder>true</CreateNewFolder>
+    <DefaultName>XPY.Templates.Web.Logic</DefaultName>
+    <ProvideDefaultName>true</ProvideDefaultName>
+    <LocationField>Enabled</LocationField>
+    <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
+    <CreateInPlace>true</CreateInPlace>
+    <Icon>XPY.Templates.Web.Logic.ico</Icon>
+  </TemplateData>
+  <TemplateContent>
+    <Project TargetFileName="XPY.Templates.Web.Logic.csproj" File="XPY.Templates.Web.Logic.csproj" ReplaceParameters="true">
+      <ProjectItem ReplaceParameters="true" TargetFileName="$ext_safeprojectname$Manager.cs">SpecificSolutionNameManager.cs</ProjectItem>
+    </Project>
+  </TemplateContent>
+</VSTemplate>

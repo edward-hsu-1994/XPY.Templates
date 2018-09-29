@@ -1,0 +1,25 @@
+<VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
+  <TemplateData>
+    <Name>XPY.Templates.Web.Models.EF</Name>
+    <Description>基本EntityFrameworkCore常用套件集合專案</Description>
+    <ProjectType>CSharp</ProjectType>
+    <ProjectSubType>
+    </ProjectSubType>
+    <SortOrder>1000</SortOrder>
+    <CreateNewFolder>true</CreateNewFolder>
+    <DefaultName>XPY.Templates.Web.Models.EF</DefaultName>
+    <ProvideDefaultName>true</ProvideDefaultName>
+    <LocationField>Enabled</LocationField>
+    <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
+    <CreateInPlace>true</CreateInPlace>
+    <Icon>XPY.Templates.Web.Models.EF.ico</Icon>
+  </TemplateData>
+  <TemplateContent>
+    <Project TargetFileName="XPY.Templates.Web.Models.EF.csproj" File="XPY.Templates.Web.Models.EF.csproj" ReplaceParameters="true">
+      <Folder Name="Partials" TargetFolderName="Partials">
+        <ProjectItem ReplaceParameters="true" TargetFileName="$ext_safeprojectname$Context.cs">SpecificSolutionNameContext.cs</ProjectItem>
+      </Folder>
+      <ProjectItem ReplaceParameters="true" TargetFileName="$ext_safeprojectname$Context.cs">SpecificSolutionNameContext.cs</ProjectItem>
+    </Project>
+  </TemplateContent>
+</VSTemplate>
