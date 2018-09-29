@@ -22,5 +22,13 @@ namespace XPY.Templates {
             Issuer.Focus();
             Issuer.SelectAll();
         }
+
+        private void JWTConfigForm_Load(object sender, EventArgs e) {
+            
+        }
+
+        private void Expires_TextChanged(object sender, EventArgs e) {
+
+        }
     }
 }

@@ -30,6 +30,9 @@
             this.Audience = new System.Windows.Forms.TextBox();
             this.SecureKey = new System.Windows.Forms.TextBox();
             this.OKButton = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.Expires = new System.Windows.Forms.NumericUpDown();
+            ((System.ComponentModel.ISupportInitialize)(this.Expires)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -64,41 +67,71 @@
             this.Issuer.Location = new System.Drawing.Point(76, 6);
             this.Issuer.Name = "Issuer";
             this.Issuer.Size = new System.Drawing.Size(203, 22);
-            this.Issuer.TabIndex = 3;
-            this.Issuer.Text = "unknow";
+            this.Issuer.TabIndex = 4;
+            this.Issuer.Text = "DefaultIssuer";
             // 
             // Audience
             // 
             this.Audience.Location = new System.Drawing.Point(76, 34);
             this.Audience.Name = "Audience";
             this.Audience.Size = new System.Drawing.Size(203, 22);
-            this.Audience.TabIndex = 4;
-            this.Audience.Text = "unknow";
+            this.Audience.TabIndex = 5;
+            this.Audience.Text = "DefaultAudience";
             // 
             // SecureKey
             // 
             this.SecureKey.Location = new System.Drawing.Point(76, 62);
             this.SecureKey.Name = "SecureKey";
             this.SecureKey.Size = new System.Drawing.Size(203, 22);
-            this.SecureKey.TabIndex = 5;
-            this.SecureKey.Text = "unknow";
+            this.SecureKey.TabIndex = 6;
+            this.SecureKey.Text = "DefaultSecureKey";
             // 
             // OKButton
             // 
-            this.OKButton.Location = new System.Drawing.Point(204, 90);
+            this.OKButton.Location = new System.Drawing.Point(204, 118);
             this.OKButton.Name = "OKButton";
             this.OKButton.Size = new System.Drawing.Size(75, 23);
-            this.OKButton.TabIndex = 6;
+            this.OKButton.TabIndex = 8;
             this.OKButton.Text = "OK";
             this.OKButton.UseVisualStyleBackColor = true;
             this.OKButton.Click += new System.EventHandler(this.OKButton_Click);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(12, 93);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(85, 12);
+            this.label4.TabIndex = 3;
+            this.label4.Text = "Expires(Second):";
+            // 
+            // Expires
+            // 
+            this.Expires.Location = new System.Drawing.Point(103, 90);
+            this.Expires.Maximum = new decimal(new int[] {
+            -1,
+            0,
+            0,
+            0});
+            this.Expires.Name = "Expires";
+            this.Expires.Size = new System.Drawing.Size(176, 22);
+            this.Expires.TabIndex = 7;
+            this.Expires.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.Expires.ThousandsSeparator = true;
+            this.Expires.Value = new decimal(new int[] {
+            43200,
+            0,
+            0,
+            0});
             // 
             // JWTConfigForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(291, 122);
+            this.ClientSize = new System.Drawing.Size(291, 146);
             this.ControlBox = false;
+            this.Controls.Add(this.Expires);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.OKButton);
             this.Controls.Add(this.SecureKey);
             this.Controls.Add(this.Audience);
@@ -114,6 +147,8 @@
             this.Text = "JWT Configuration";
             this.TopMost = true;
             this.Activated += new System.EventHandler(this.JWTConfigForm_Activated);
+            this.Load += new System.EventHandler(this.JWTConfigForm_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.Expires)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -128,5 +163,7 @@
         internal System.Windows.Forms.TextBox Issuer;
         internal System.Windows.Forms.TextBox Audience;
         internal System.Windows.Forms.TextBox SecureKey;
+        private System.Windows.Forms.Label label4;
+        internal System.Windows.Forms.NumericUpDown Expires;
     }
 }

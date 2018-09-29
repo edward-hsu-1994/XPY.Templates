@@ -5,6 +5,7 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.Extensions.Configuration;
 using $safeprojectname$.Base.Authorization;
 using $safeprojectname$.Base.Mvc;
 using $safeprojectname$.Logic;
@@ -18,11 +19,11 @@ namespace $safeprojectname$.Controllers {
     }
 
     /// <summary>
-    /// 產生JWT範例
+    /// 產生JWT
     /// </summary>
     /// <param name="userId">使用者唯一識別號</param>
     /// <returns>JWT</returns>
-    private string BuildTokenSample(string userId) {
+    private string BuildToken(string userId) {
         var tokenModel = new $lastnamespace$Token() {
             Header = new DefaultJwtHeader() {
                 Algorithm = SecurityAlgorithms.HmacSha256
@@ -35,7 +36,7 @@ namespace $safeprojectname$.Controllers {
                     Role = $lastnamespace$Token.Roles.Administrator,
                     Subject = $lastnamespace$Token.Subjects.Login,
                     IssuedAt = DateTime.Now,
-                    Expires = DateTime.Now.AddHours(12)
+                    Expires = DateTime.Now.AddSeconds(Startup.Configuration.GetSection("JWT").GetValue<int>("Expires"))
                 }
             };
 

@@ -44,6 +44,7 @@ namespace XPY.Templates.Web.Wizard {
                 replacementsDictionary["$issuer$"] = jwtConfigForm.Issuer.Text;
                 replacementsDictionary["$audience$"] = jwtConfigForm.Audience.Text;
                 replacementsDictionary["$securekey$"] = jwtConfigForm.SecureKey.Text;
+                replacementsDictionary["$expires$"] = jwtConfigForm.Expires.Value.ToString();
             }
 
             switch (runKind) {
