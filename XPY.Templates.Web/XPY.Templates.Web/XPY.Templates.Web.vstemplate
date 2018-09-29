@@ -20,6 +20,9 @@
       <Folder Name="Controllers" TargetFolderName="Controllers">
         <ProjectItem ReplaceParameters="true" TargetFileName="UserController.cs">UserController.cs</ProjectItem>
       </Folder>
+      <Folder Name="Properties" TargetFolderName="Properties">
+        <ProjectItem ReplaceParameters="true" TargetFileName="launchSettings.json">launchSettings.json</ProjectItem>
+      </Folder>
       <ProjectItem ReplaceParameters="true" TargetFileName="appsettings.json">appsettings.json</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="appsettings.Development.json">appsettings.Development.json</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="Dockerfile">Dockerfile</ProjectItem>
