@@ -1,0 +1,1 @@
+dotnet ef dbcontext scaffold "Your Connection String" Npgsql.EntityFrameworkCore.PostgreSQL -d -f -c $lastnamespace$Context

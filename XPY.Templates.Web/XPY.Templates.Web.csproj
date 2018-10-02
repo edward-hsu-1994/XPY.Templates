@@ -55,7 +55,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="XPY.Templates.Web.Models.EF\CodeTemplates\CSharpDbContext\DbContext.hbs" />
+    <None Include="XPY.Templates.Web.Models.EF\CodeTemplates\CSharpDbContext\Partials\DbImports.hbs" />
+    <None Include="XPY.Templates.Web.Models.EF\CodeTemplates\CSharpDbContext\Partials\DbSets.hbs" />
+    <None Include="XPY.Templates.Web.Models.EF\CodeTemplates\CSharpEntityType\Class.hbs" />
+    <None Include="XPY.Templates.Web.Models.EF\CodeTemplates\CSharpEntityType\Partials\Constructor.hbs" />
+    <None Include="XPY.Templates.Web.Models.EF\CodeTemplates\CSharpEntityType\Partials\Imports.hbs" />
+    <None Include="XPY.Templates.Web.Models.EF\CodeTemplates\CSharpEntityType\Partials\Properties.hbs" />
+    <None Include="XPY.Templates.Web.Models.EF\Helpers\ScaffoldingDesignTimeServices.cs" />
     <None Include="XPY.Templates.Web.Models.EF\Partials\SpecificSolutionNameContext.cs" />
+    <None Include="XPY.Templates.Web.Models.EF\scaffold.bat" />
     <None Include="XPY.Templates.Web.Models.EF\SpecificSolutionNameContext.cs" />
     <None Include="XPY.Templates.Web.Logic\SpecificSolutionNameManager.cs" />
     <None Include="XPY.Templates.Web.Base\Authorization\JwtAuthenticationExtension.cs" />

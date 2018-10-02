@@ -19,6 +19,27 @@
       <Folder Name="Partials" TargetFolderName="Partials">
         <ProjectItem ReplaceParameters="true" TargetFileName="$lastnamespace$Context.cs">SpecificSolutionNameContext.cs</ProjectItem>
       </Folder>
+      <Folder Name="Helpers" TargetFolderName="Helpers">
+        <ProjectItem ReplaceParameters="true" TargetFileName="ScaffoldingDesignTimeServices.cs">ScaffoldingDesignTimeServices.cs</ProjectItem>
+      </Folder>
+      <Folder Name="CodeTemplates" TargetFolderName="CodeTemplates">
+        <Folder Name="CSharpDbContext" TargetFolderName="CSharpDbContext">
+          <Folder Name="Partials" TargetFolderName="Partials">
+            <ProjectItem ReplaceParameters="false" TargetFileName="DbImports.hbs">DbImports.hbs</ProjectItem>
+            <ProjectItem ReplaceParameters="false" TargetFileName="DbSets.hbs">DbSets.hbs</ProjectItem>
+          </Folder>
+          <ProjectItem ReplaceParameters="false" TargetFileName="DbContext.hbs">DbContext.hbs</ProjectItem>
+        </Folder>
+        <Folder Name="CSharpEntityType" TargetFolderName="CSharpEntityType">
+          <Folder Name="Partials" TargetFolderName="Partials">
+            <ProjectItem ReplaceParameters="false" TargetFileName="Constructor.hbs">Constructor.hbs</ProjectItem>
+            <ProjectItem ReplaceParameters="false" TargetFileName="Imports.hbs">Imports.hbs</ProjectItem>
+            <ProjectItem ReplaceParameters="false" TargetFileName="Properties.hbs">Properties.hbs</ProjectItem>
+          </Folder>
+          <ProjectItem ReplaceParameters="false" TargetFileName="Class.hbs">Class.hbs</ProjectItem>
+        </Folder>
+      </Folder>
+      <ProjectItem ReplaceParameters="true" TargetFileName="scaffold.bat">scaffold.bat</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="$lastnamespace$Context.cs">SpecificSolutionNameContext.cs</ProjectItem>
     </Project>
   </TemplateContent>
