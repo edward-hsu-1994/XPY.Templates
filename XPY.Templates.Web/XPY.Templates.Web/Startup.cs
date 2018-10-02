@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -41,8 +42,11 @@ namespace $safeprojectname$ {
     /// <param name="services">服務容器</param>
     public void ConfigureServices(IServiceCollection services) {
         // 加入邏輯控制器
-        services.AddLogic <$lastnamespace$Manager, $lastnamespace$Context > ()
-             .AddFromDbContext("Id");
+        services.AddLogic <$lastnamespace$Manager, $lastnamespace$Context > (options => {
+            options.UseLazyLoadingProxies();
+            // 此處選擇使用個別專案的資料庫連線提供者
+            // options.UseNpgsql("Connection String");
+        }).AddFromDbContext("Id");
 
         // 使用認證
         services.AddJwtAuthentication(
@@ -52,8 +56,7 @@ namespace $safeprojectname$ {
 
         // 使用MVC服務
         services.AddMvc()
-            .AddJsonOptions(options => { // 設定JSON格式化選項
-                                         // 使用忽略LazyLoader屬性
+            .AddJsonOptions(options => { // 設定JSON格式化選項，使用忽略LazyLoader屬性
                 options.SerializerSettings.ContractResolver = new IgnoreLazyLoaderContractResolver();
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             })
