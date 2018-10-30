@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
+using System.Reflection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -16,7 +17,9 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.IdentityModel.Tokens;
-using Swashbuckle.AspNetCore.Swagger;
+using NSwag.AspNetCore;
+using NJsonSchema;
+using NSwag.SwaggerGeneration.Processors.Security;
 using $safeprojectname$.Base.Utilities;
 using $safeprojectname$.Base.Utilities.Swagger;
 using $safeprojectname$.Logic;
@@ -63,11 +66,7 @@ namespace $safeprojectname$ {
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
         // 註冊Swagger產生器
-        services.AddSwaggerGen(
-            name: Configuration.GetSection("Swagger:Name").Value,
-            title: Configuration.GetSection("Swagger:Title").Value,
-            description: Configuration.GetSection("Swagger:Description").Value,
-            version: Configuration.GetSection("Swagger:Version").Value);
+        services.AddSwagger();
 
         // 設定SPA根目錄
         services.AddSpaStaticFiles(options => {
@@ -91,14 +90,24 @@ namespace $safeprojectname$ {
         // 使用MVC
         app.UseMvc();
 
-        // 使用Swagger
-        app.UseSwagger();
+        // 使用Swagger UI並搭配API探索器
+        app.UseSwaggerUi3WithApiExplorer(settings => {
+            settings.GeneratorSettings.DefaultPropertyNameHandling =
+                PropertyNameHandling.CamelCase;
 
-        // 使用Swagger UI
-        app.UseSwaggerUI(c => {
-            c.SwaggerEndpoint(
-                $"/swagger/{Configuration.GetSection("Swagger:Name").Value}/swagger.json",
-                Configuration.GetSection("Swagger:Title").Value);
+            settings.GeneratorSettings.Title = Configuration.GetSection("Swagger:Name").Value;
+            settings.GeneratorSettings.Description = Configuration.GetSection("Swagger:Title").Value;
+            settings.GeneratorSettings.Version = Assembly.GetEntryAssembly().GetName().Version.ToString();
+
+            // ref: https://github.com/RSuter/NSwag/issues/869
+            settings.GeneratorSettings.OperationProcessors.Add(new OperationSecurityScopeProcessor("apiKey"));
+            settings.GeneratorSettings.OperationProcessors.Add(new AuthorizeOperationProcessor());
+            settings.GeneratorSettings.DocumentProcessors.Add(new SecurityDefinitionAppender("apiKey", new NSwag.SwaggerSecurityScheme() {
+                Type = NSwag.SwaggerSecuritySchemeType.ApiKey,
+                Name = "Authorization",
+                In = NSwag.SwaggerSecurityApiKeyLocation.Header,
+                Description = "JWT(Bearer) 存取權杖"
+            }));
         });
 
         // 使用靜態檔案
