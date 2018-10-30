@@ -55,6 +55,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="XPY.Templates.Web.Base\Utilities\Swagger\AuthorizeOperationProcessor.cs" />
+    <None Include="XPY.Templates.Web.Base\Utilities\Swagger\SummaryOperationProcessor.cs" />
     <None Include="XPY.Templates.Web.Models.EF\CodeTemplates\CSharpDbContext\DbContext.hbs" />
     <None Include="XPY.Templates.Web.Models.EF\CodeTemplates\CSharpDbContext\Partials\DbImports.hbs" />
     <None Include="XPY.Templates.Web.Models.EF\CodeTemplates\CSharpDbContext\Partials\DbSets.hbs" />
@@ -71,10 +73,6 @@
     <None Include="XPY.Templates.Web.Base\Authorization\SpecificSolutionNameToken.cs" />
     <None Include="XPY.Templates.Web.Base\Mvc\BaseController.cs" />
     <None Include="XPY.Templates.Web.Base\Utilities\IgnoreLazyLoaderContractResolver.cs" />
-    <None Include="XPY.Templates.Web.Base\Utilities\Swagger\AuthorizeOperationFilter.cs" />
-    <None Include="XPY.Templates.Web.Base\Utilities\Swagger\FormFileOperationFilter.cs" />
-    <None Include="XPY.Templates.Web.Base\Utilities\Swagger\SummaryOperationFilterBase.cs" />
-    <None Include="XPY.Templates.Web.Base\Utilities\Swagger\SwaggerCustomExtension.cs" />
     <None Include="XPY.Templates.Web\Controllers\UserController.cs" />
     <None Include="XPY.Templates.Web\Program.cs" />
     <None Include="XPY.Templates.Web\Properties\launchSettings.json" />
