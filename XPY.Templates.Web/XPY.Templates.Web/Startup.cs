@@ -48,7 +48,12 @@ namespace $safeprojectname$ {
         services.AddLogic <$lastnamespace$Manager, $lastnamespace$Context > (options => {
             options.UseLazyLoadingProxies();
             // 此處選擇使用個別專案的資料庫連線提供者
-            // options.UseNpgsql("Connection String");
+            $if$ ( $efProvider$ == PostgreSQL )
+             options.UseNpgsql(Configuration.GetConnectionString("default"));
+            $endif$
+            $if$ ( $efProvider$ == MSSQL )
+             options.UseSqlServer(Configuration.GetConnectionString("default"));
+            $endif$
         }).AddFromDbContext("Id");
 
         // 使用認證
@@ -96,7 +101,7 @@ namespace $safeprojectname$ {
                 PropertyNameHandling.CamelCase;
 
             settings.GeneratorSettings.Title = Configuration.GetSection("Swagger:Name").Value;
-            settings.GeneratorSettings.Description = Configuration.GetSection("Swagger:Title").Value;
+            settings.GeneratorSettings.Description = Configuration.GetSection("Swagger:Description").Value;
             settings.GeneratorSettings.Version = Assembly.GetEntryAssembly().GetName().Version.ToString();
 
             // ref: https://github.com/RSuter/NSwag/issues/869

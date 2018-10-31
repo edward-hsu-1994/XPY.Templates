@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using EnvDTE;
 using EnvDTE80;
+using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.TemplateWizard;
 
 namespace XPY.Templates.Web.Wizard {
@@ -33,10 +34,40 @@ namespace XPY.Templates.Web.Wizard {
             foreach (string prjName in projectNames)
                 this.AdjustProjectLoaction(prjName);
 
-            foreach (string prjName in projectNames)
+            foreach (string prjName in projectNames) {
                 Directory.Delete(Path.GetDirectoryName(prjName), true);
+
+                if (Path.GetDirectoryName(prjName).EndsWith(".Models.EF")) {
+                    string slnPath = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(prjName)));
+
+                    var batPath = Path.Combine(slnPath, Path.GetDirectoryName(prjName).Split(new char[] { '/', '\\' }).Last(), "scaffold.bat");
+
+                    var proc = System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo() {
+                        FileName = batPath,
+                        WorkingDirectory = Path.GetDirectoryName(batPath)
+                    });
+                    proc.WaitForExit();
+                    if (proc.ExitCode == 0) {
+                        MessageBox.Show(
+                            "EFCore Models 更新完成",
+                            "更新完成",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Information);
+                        return;
+                    } else {
+                        MessageBox.Show(
+                            "EFCore Models 更新失敗",
+                            "更新失敗，請檢查批次檔內的資料庫連線字串",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+            }
         }
 
+        private static string efProvider;
+        private static string connectionString;
         public void RunStarted(
             object automationObject,
             Dictionary<string, string> replacementsDictionary,
@@ -56,14 +87,24 @@ namespace XPY.Templates.Web.Wizard {
             if (
                 replacementsDictionary.ContainsKey("$ext_safeprojectname$") &&
                 replacementsDictionary["$ext_safeprojectname$"] == replacementsDictionary["$safeprojectname$"]) {
-                var jwtConfigForm = new JWTConfigForm();
-                jwtConfigForm.ShowDialog();
 
-                replacementsDictionary["$issuer$"] = jwtConfigForm.Issuer.Text;
-                replacementsDictionary["$audience$"] = jwtConfigForm.Audience.Text;
-                replacementsDictionary["$securekey$"] = jwtConfigForm.SecureKey.Text;
-                replacementsDictionary["$expires$"] = jwtConfigForm.Expires.Value.ToString();
+                var slnForm = new SlnWizard();
+                slnForm.ShowDialog();
+
+                replacementsDictionary["$issuer$"] = slnForm.Issuer.Text;
+                replacementsDictionary["$audience$"] = slnForm.Audience.Text;
+                replacementsDictionary["$securekey$"] = slnForm.SecureKey.Text;
+                replacementsDictionary["$expires$"] = slnForm.Expires.Value.ToString();
+
+                replacementsDictionary["$swaggerName$"] = slnForm.SwaggerName.Text;
+                replacementsDictionary["$swaggerDescription$"] = slnForm.SwaggerDescription.Text;
+
+                efProvider = slnForm.dbType.SelectedItem.ToString();
+                connectionString = slnForm.dbConnectionString.Text;
             }
+
+            replacementsDictionary["$efProvider$"] = efProvider;
+            replacementsDictionary["$connectionString$"] = connectionString;
 
             switch (runKind) {
                 case WizardRunKind.AsMultiProject:
