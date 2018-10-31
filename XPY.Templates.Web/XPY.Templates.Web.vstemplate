@@ -5,7 +5,6 @@
     <Description>私人用網頁專案範例</Description>
     <Icon>XPY.Templates.Web.ico</Icon>
     <ProjectType>CSharp</ProjectType>
-    <CreateNewFolder>true</CreateNewFolder>
   </TemplateData>
   <TemplateContent>
     <ProjectCollection>

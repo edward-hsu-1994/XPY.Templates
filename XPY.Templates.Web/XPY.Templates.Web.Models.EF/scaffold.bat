@@ -1,1 +1,1 @@
-dotnet ef dbcontext scaffold "Your Connection String" Npgsql.EntityFrameworkCore.PostgreSQL -d -f -c $lastnamespace$Context
+dotnet ef dbcontext scaffold "$connectionString$" $if$ ($efProvider$ == PostgreSQL) Npgsql.EntityFrameworkCore.PostgreSQL $endif$ $if$ ($efProvider$ == MSSQL) Microsoft.EntityFrameworkCore.SqlServer $endif$ -d -f -c $lastnamespace$Context

@@ -54,13 +54,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="JWTConfigForm.cs">
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SlnWizard.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="JWTConfigForm.Designer.cs">
-      <DependentUpon>JWTConfigForm.cs</DependentUpon>
+    <Compile Include="SlnWizard.Designer.cs">
+      <DependentUpon>SlnWizard.cs</DependentUpon>
     </Compile>
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UpdateEFCoreModels.cs" />
     <Compile Include="UpdateEFCoreModelsPackage.cs" />
     <Compile Include="WizardImplementation.cs" />
@@ -100,6 +100,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="AeroWizard, Version=2.1.12.0, Culture=neutral, PublicKeyToken=915e74f5d64b8f37, processorArchitecture=MSIL">
+      <HintPath>..\packages\AeroWizard.2.1.12\lib\net452\AeroWizard.dll</HintPath>
+    </Reference>
     <Reference Include="envdte, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
@@ -187,8 +190,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="JWTConfigForm.resx">
-      <DependentUpon>JWTConfigForm.cs</DependentUpon>
+    <EmbeddedResource Include="SlnWizard.resx">
+      <DependentUpon>SlnWizard.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="VSPackage.resx">
       <MergeWithCTO>true</MergeWithCTO>
