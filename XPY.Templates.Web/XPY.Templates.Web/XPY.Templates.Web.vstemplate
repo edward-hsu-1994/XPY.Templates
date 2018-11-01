@@ -18,7 +18,7 @@
     <Project TargetFileName="XPY.Templates.Web.csproj" File="XPY.Templates.Web.csproj" ReplaceParameters="true">
       <Folder Name="wwwroot" TargetFolderName="wwwroot" />
       <Folder Name="Controllers" TargetFolderName="Controllers">
-        <ProjectItem ReplaceParameters="true" TargetFileName="UserController.cs">UserController.cs</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="SampleController.cs">SampleController.cs</ProjectItem>
       </Folder>
       <Folder Name="Properties" TargetFolderName="Properties">
         <ProjectItem ReplaceParameters="true" TargetFileName="launchSettings.json">launchSettings.json</ProjectItem>

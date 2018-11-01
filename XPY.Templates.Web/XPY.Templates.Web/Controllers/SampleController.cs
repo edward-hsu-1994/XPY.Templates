@@ -13,8 +13,8 @@ using $safeprojectname$.Models.EF;
 using XWidget.Web.Jwt;
 
 namespace $safeprojectname$.Controllers {
-    public class UserController : BaseController<$lastnamespace$Manager, $lastnamespace$Context> {
-    public UserController($lastnamespace$Manager manager) : base(manager) {
+    public class SampleController : BaseController<$lastnamespace$Manager, $lastnamespace$Context> {
+    public SampleController($lastnamespace$Manager manager) : base(manager) {
 
     }
 
