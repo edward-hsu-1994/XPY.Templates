@@ -16,6 +16,9 @@
   </TemplateData>
   <TemplateContent>
     <Project TargetFileName="XPY.Templates.Web.Models.EF.csproj" File="XPY.Templates.Web.Models.EF.csproj" ReplaceParameters="true">
+      <Folder Name="Attributes" TargetFolderName="Attributes">
+        <ProjectItem ReplaceParameters="true" TargetFileName="DefaultOrderAttribute.cs">DefaultOrderAttribute.cs</ProjectItem>
+      </Folder>
       <Folder Name="Partials" TargetFolderName="Partials">
         <ProjectItem ReplaceParameters="true" TargetFileName="$lastnamespace$Context.cs">SpecificSolutionNameContext.cs</ProjectItem>
       </Folder>

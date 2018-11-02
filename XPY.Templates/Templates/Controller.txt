@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Dynamic;
 using System.Security.Cryptography;
+using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -15,6 +16,7 @@ using $slnName$.Base.Authorization;
 using $slnName$.Base.Mvc;
 using $slnName$.Logic;
 using $slnName$.Models.EF;
+using $slnName$.Models.EF.Attributes;
 
 namespace $slnName$.Controllers {
     public class $modelName$Controller : BaseController<$lastnamespace$Manager, $lastnamespace$Context> {
@@ -45,6 +47,10 @@ namespace $slnName$.Controllers {
                     matchObj.TryAdd(kv.Key, typeof($modelName$).GetProperty(kv.Key).GetValue(tempMatchObj));
                 }
                 list = list.Match(matchObj);
+            }
+
+            if (order == null || order.Length == 0) {
+                order = typeof($modelName$).GetCustomAttribute<DefaultOrderAttribute>()?.Properties;
             }
 
             if (order == null || order.Length == 0) {
