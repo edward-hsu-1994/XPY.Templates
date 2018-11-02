@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -60,7 +61,10 @@ namespace XPY.Templates.Web.Wizard {
                     }
 
                     // 產生控制器
-                    var template = System.IO.File.ReadAllText("./Templates/Controller.txt");
+                    Assembly currentAssembly = Assembly.GetExecutingAssembly();
+
+                    Stream stream = currentAssembly.GetManifestResourceStream(currentAssembly.GetName().Name + ".Templates.Controller.txt");
+                    var template = new StreamReader(stream).ReadToEnd();
 
                     foreach (var model in Directory.GetFiles(Path.GetDirectoryName(batPath), "*.cs", SearchOption.TopDirectoryOnly)) {
                         var filename = Path.GetFileNameWithoutExtension(model);
