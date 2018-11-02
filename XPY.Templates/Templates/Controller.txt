@@ -1,0 +1,117 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Dynamic;
+using System.Security.Cryptography;
+using System.Reflection;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using XWidget.Web.Jwt;
+using XWidget.Linq;
+using $slnName$.Base.Authorization;
+using $slnName$.Base.Mvc;
+using $slnName$.Logic;
+using $slnName$.Models.EF;
+using $slnName$.Models.EF.Attributes;
+
+namespace $slnName$.Controllers {
+    public class $modelName$Controller : BaseController<$lastnamespace$Manager, $lastnamespace$Context> {
+        public $modelName$Controller($lastnamespace$Manager manager) : base(manager) {
+
+        }
+
+        /// <summary>
+        /// 取得列表分頁結果
+        /// </summary>
+        /// <param name="match">匹配模式(JSON格式)</param>
+        /// <param name="order">排序方法</param>
+        /// <param name="skip">起始索引</param>
+        /// <param name="take">取得筆數</param>
+        /// <returns>分頁結果</returns>
+        [HttpGet]
+        public async Task<Paging<$modelName$>> List(
+            [FromQuery]string match = null,
+            [FromQuery]string[] order = null,
+            [FromQuery]int skip = 0,
+            [FromQuery]int take = 10) {
+            IQueryable<$modelName$> list = await Manager.ListAsync<$modelName$>();
+
+            if (!string.IsNullOrWhiteSpace(match)) {
+                ExpandoObject matchObj = new ExpandoObject();
+                $modelName$ tempMatchObj = JsonConvert.DeserializeObject<$modelName$>(match);
+                foreach (var kv in JObject.Parse(match)) {
+                    matchObj.TryAdd(kv.Key, typeof($modelName$).GetProperty(kv.Key).GetValue(tempMatchObj));
+                }
+                list = list.Match(matchObj);
+            }
+
+            if (order == null || order.Length == 0) {
+                order = typeof($modelName$).GetCustomAttribute<DefaultOrderAttribute>()?.Properties;
+            }
+
+            if (order == null || order.Length == 0) {
+                return list
+                    .AsPaging(skip, take);
+            } else {
+                return list
+                    .OrderBy(
+                        order.Select(x => {
+                            if (x[0] == '-') {
+                                return (isDec: true, name: x.Substring(1));
+                            } else {
+                                return (isDec: false, name: x);
+                            }
+                        }).ToArray()
+                    )
+                    .AsPaging(skip, take);
+            }
+        }
+
+        /// <summary>
+        /// 取得指定實例
+        /// </summary>
+        /// <param name="id">唯一識別號</param>
+        /// <returns>目標實例</returns>
+        [HttpGet("{id}")]
+        public async Task<$modelName$> Get(
+            [FromRoute]object id) {
+            return await Manager.GetAsync<$modelName$>(id);
+        }
+
+        /// <summary>
+        /// 建立實例
+        /// </summary>
+        /// <param name="instance">實例內容</param>
+        /// <returns>新實例</returns>
+        [HttpPost]
+        public async Task<$modelName$> Create(
+            [FromBody]$modelName$ instance) {
+            return await Manager.CreateAsync(instance);
+        }
+
+        /// <summary>
+        /// 更新實例
+        /// </summary>
+        /// <param name="instance">實例內容</param>
+        /// <returns>更新後的實例</returns>
+        [HttpPut]
+        public async Task<$modelName$> Update(
+            [FromBody]$modelName$ instance) {
+            return await Manager.UpdateAsync(instance);
+        }
+
+        /// <summary>
+        /// 刪除指定實例
+        /// </summary>
+        /// <param name="id">唯一識別號</param>
+        /// <returns></returns>
+        [HttpDelete("{id}")]
+        public async Task Delete(object id) {
+            await Manager.DeleteAsync<$modelName$>(id);
+        }
+    }
+}

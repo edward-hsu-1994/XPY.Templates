@@ -39,10 +39,11 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.EFSettingPage = new AeroWizard.WizardPage();
+            this.initEFCore = new System.Windows.Forms.CheckBox();
+            this.dbType = new System.Windows.Forms.ComboBox();
             this.dbConnectionString = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.dbType = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.wizardControl1)).BeginInit();
             this.JWTPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Expires)).BeginInit();
@@ -76,7 +77,7 @@
             this.JWTPage.Controls.Add(this.label1);
             this.JWTPage.Name = "JWTPage";
             this.JWTPage.NextPage = this.SwaggerPage;
-            this.JWTPage.Size = new System.Drawing.Size(527, 234);
+            this.JWTPage.Size = new System.Drawing.Size(527, 230);
             this.JWTPage.TabIndex = 0;
             this.JWTPage.Text = "JSON Web Token 設定";
             // 
@@ -207,39 +208,28 @@
             // 
             // EFSettingPage
             // 
+            this.EFSettingPage.Controls.Add(this.initEFCore);
             this.EFSettingPage.Controls.Add(this.dbType);
             this.EFSettingPage.Controls.Add(this.dbConnectionString);
             this.EFSettingPage.Controls.Add(this.label6);
             this.EFSettingPage.Controls.Add(this.label8);
             this.EFSettingPage.Name = "EFSettingPage";
-            this.EFSettingPage.Size = new System.Drawing.Size(527, 234);
+            this.EFSettingPage.Size = new System.Drawing.Size(527, 230);
             this.EFSettingPage.TabIndex = 2;
             this.EFSettingPage.Text = "Entity Framework Core 設定";
             // 
-            // dbConnectionString
+            // initEFCore
             // 
-            this.dbConnectionString.Location = new System.Drawing.Point(77, 31);
-            this.dbConnectionString.Name = "dbConnectionString";
-            this.dbConnectionString.Size = new System.Drawing.Size(447, 23);
-            this.dbConnectionString.TabIndex = 17;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(3, 34);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(58, 15);
-            this.label6.TabIndex = 15;
-            this.label6.Text = "連線字串:";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(3, 6);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(70, 15);
-            this.label8.TabIndex = 14;
-            this.label8.Text = "資料庫類型:";
+            this.initEFCore.AutoSize = true;
+            this.initEFCore.Checked = true;
+            this.initEFCore.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.initEFCore.Location = new System.Drawing.Point(6, 3);
+            this.initEFCore.Name = "initEFCore";
+            this.initEFCore.Size = new System.Drawing.Size(188, 19);
+            this.initEFCore.TabIndex = 1;
+            this.initEFCore.Text = "初始化Entity Framework Core";
+            this.initEFCore.UseVisualStyleBackColor = true;
+            this.initEFCore.CheckedChanged += new System.EventHandler(this.initEFCore_CheckedChanged);
             // 
             // dbType
             // 
@@ -248,10 +238,36 @@
             this.dbType.Items.AddRange(new object[] {
             "MSSQL",
             "PostgreSQL"});
-            this.dbType.Location = new System.Drawing.Point(79, 3);
+            this.dbType.Location = new System.Drawing.Point(79, 28);
             this.dbType.Name = "dbType";
             this.dbType.Size = new System.Drawing.Size(445, 23);
             this.dbType.TabIndex = 18;
+            // 
+            // dbConnectionString
+            // 
+            this.dbConnectionString.Location = new System.Drawing.Point(77, 56);
+            this.dbConnectionString.Name = "dbConnectionString";
+            this.dbConnectionString.Size = new System.Drawing.Size(447, 23);
+            this.dbConnectionString.TabIndex = 17;
+            this.dbConnectionString.TextChanged += new System.EventHandler(this.dbConnectionString_TextChanged);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(3, 59);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(58, 15);
+            this.label6.TabIndex = 15;
+            this.label6.Text = "連線字串:";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(3, 31);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(70, 15);
+            this.label8.TabIndex = 14;
+            this.label8.Text = "資料庫類型:";
             // 
             // SlnWizard
             // 
@@ -296,5 +312,6 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label8;
         internal System.Windows.Forms.ComboBox dbType;
+        internal System.Windows.Forms.CheckBox initEFCore;
     }
 }

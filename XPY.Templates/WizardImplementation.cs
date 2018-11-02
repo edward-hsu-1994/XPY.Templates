@@ -42,19 +42,15 @@ namespace XPY.Templates.Web.Wizard {
 
                     var batPath = Path.Combine(slnPath, Path.GetDirectoryName(prjName).Split(new char[] { '/', '\\' }).Last(), "scaffold.bat");
 
+                    if (!initEFCore) {
+                        continue;
+                    }
                     var proc = System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo() {
                         FileName = batPath,
                         WorkingDirectory = Path.GetDirectoryName(batPath)
                     });
                     proc.WaitForExit();
-                    if (proc.ExitCode == 0) {
-                        MessageBox.Show(
-                            "EFCore Models 更新完成",
-                            "更新完成",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Information);
-                        return;
-                    } else {
+                    if (proc.ExitCode != 0) {
                         MessageBox.Show(
                             "EFCore Models 更新失敗",
                             "更新失敗，請檢查批次檔內的資料庫連線字串",
@@ -62,18 +58,39 @@ namespace XPY.Templates.Web.Wizard {
                             MessageBoxIcon.Error);
                         return;
                     }
+
+                    // 產生控制器
+                    var template = System.IO.File.ReadAllText("./Templates/Controller.txt");
+
+                    foreach (var model in Directory.GetFiles(Path.GetDirectoryName(batPath), "*.cs", SearchOption.TopDirectoryOnly)) {
+                        var filename = Path.GetFileNameWithoutExtension(model);
+                        if (filename.EndsWith("Context") && filename != "Context") {
+                            continue;
+                        }
+
+                        var output = template;
+                        foreach (var kv in replacementsDictionary) {
+                            output = output.Replace(kv.Key, kv.Value);
+                        }
+                        output = output.Replace("$modelName$", filename);
+                        output = output.Replace("$slnName$", Path.GetFileName(slnPath));
+
+                        File.WriteAllText(Path.Combine(slnPath, Path.GetFileName(slnPath), "Controllers", $"{filename}Controller.cs"), output);
+                    }
                 }
             }
         }
 
+        private static bool initEFCore;
         private static string efProvider;
         private static string connectionString;
+        private static Dictionary<string, string> replacementsDictionary;
         public void RunStarted(
             object automationObject,
             Dictionary<string, string> replacementsDictionary,
             WizardRunKind runKind,
             object[] customParams) {
-
+            WizardImplementation.replacementsDictionary = replacementsDictionary;
             dte2 = automationObject as DTE2;
 
             if (replacementsDictionary.ContainsKey("$ext_safeprojectname$")) {
@@ -91,6 +108,7 @@ namespace XPY.Templates.Web.Wizard {
                 var slnForm = new SlnWizard();
                 slnForm.ShowDialog();
 
+                initEFCore = slnForm.initEFCore.Checked;
                 replacementsDictionary["$issuer$"] = slnForm.Issuer.Text;
                 replacementsDictionary["$audience$"] = slnForm.Audience.Text;
                 replacementsDictionary["$securekey$"] = slnForm.SecureKey.Text;
