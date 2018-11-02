@@ -50,13 +50,7 @@ namespace XPY.Templates.Web.Wizard {
                         WorkingDirectory = Path.GetDirectoryName(batPath)
                     });
                     proc.WaitForExit();
-                    if (proc.ExitCode == 0) {
-                        MessageBox.Show(
-                            "EFCore Models 更新完成",
-                            "更新完成",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Information);
-                    } else {
+                    if (proc.ExitCode != 0) {
                         MessageBox.Show(
                             "EFCore Models 更新失敗",
                             "更新失敗，請檢查批次檔內的資料庫連線字串",
