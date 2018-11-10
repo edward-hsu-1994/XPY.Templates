@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="XPY.Templates.bd79158d-ff40-427a-9763-d44c1355a20b" Version="1.0.10" Language="en-US" Publisher="XuPeiYao" />
+        <Identity Id="XPY.Templates.bd79158d-ff40-427a-9763-d44c1355a20b" Version="1.0.11" Language="en-US" Publisher="XuPeiYao" />
         <DisplayName>XPY.Templates</DisplayName>
         <Description xml:space="preserve">XuPeiYao私人專案樣板</Description>
         <License>LICENSE.txt</License>
