@@ -89,12 +89,30 @@ namespace $safeprojectname$ {
             app.UseDeveloperExceptionPage();
         }
 
+        #region Adding security headers
+        var policyCollection = new HeaderPolicyCollection()
+            .AddFrameOptionsDeny()
+            .AddXssProtectionBlock()
+            .AddContentTypeOptionsNoSniff()
+            .AddReferrerPolicyStrictOriginWhenCrossOrigin()
+            .RemoveServerHeader();
+        //.AddStrictTransportSecurityMaxAgeIncludeSubDomains(maxAgeInSeconds: 60 * 60 * 24 * 365)
+        //.AddContentSecurityPolicy(builder => {
+        //    builder.AddObjectSrc().None();
+        //    builder.AddFormAction().Self();
+        //    builder.AddFrameAncestors().None();
+        //});
+
+        app.UseSecurityHeaders(policyCollection);
+        #endregion
+
         // 使用認證
         app.UseAuthentication();
 
         // 使用MVC
         app.UseMvc();
 
+        #region Swagger UI
         // 使用Swagger UI並搭配API探索器
         app.UseSwaggerUi3WithApiExplorer(settings => {
             settings.GeneratorSettings.DefaultPropertyNameHandling =
@@ -114,6 +132,7 @@ namespace $safeprojectname$ {
                 Description = "JWT(Bearer) 存取權杖"
             }));
         });
+        #endregion
 
         // 使用靜態檔案
         app.UseStaticFiles();
