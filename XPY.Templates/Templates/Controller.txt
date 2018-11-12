@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using XWidget.Web.Jwt;
+using XWidget.Web.Exceptions;
 using XWidget.Linq;
 using $slnName$.Base.Authorization;
 using $slnName$.Base.Mvc;
@@ -27,6 +28,8 @@ namespace $slnName$.Controllers {
         /// <summary>
         /// 取得列表分頁結果
         /// </summary>
+		/// <param name="keyword">關鍵字</param>
+		/// <param name="keyword_property">關鍵字</param>
         /// <param name="match">匹配模式(JSON格式)</param>
         /// <param name="order">排序方法</param>
         /// <param name="skip">起始索引</param>
@@ -34,25 +37,65 @@ namespace $slnName$.Controllers {
         /// <returns>分頁結果</returns>
         [HttpGet]
         public async Task<Paging<$modelName$>> List(
+		    [FromQuery]string keyword = null,
+			[FromQuery]string[] keyword_property = null,
             [FromQuery]string match = null,
             [FromQuery]string[] order = null,
             [FromQuery]int skip = 0,
             [FromQuery]int take = 10) {
-            IQueryable<$modelName$> list = await Manager.ListAsync<$modelName$>();
+			#region 修正排序屬性大小寫問題
+			string FixPropertyCase(string property) {
+                var propertyInfo =
+                    typeof($modelName$).GetProperty(
+                        property,
+                        BindingFlags.Instance | BindingFlags.Public | BindingFlags.IgnoreCase);
 
+                if(propertyInfo == null) {
+                    throw new ParameterException();
+                }
+
+                return propertyInfo.Name;
+            }
+			#endregion
+
+            IQueryable<$modelName$> list = null;
+
+			// 關鍵字搜尋判斷
+			if (string.IsNullOrWhiteSpace(keyword)) {
+				list = await Manager.ListAsync<$modelName$>();
+			} else {
+				// 搜尋屬性範圍
+				if (keyword_property == null || keyword_property.Length == 0) {
+					list = await Manager.SearchAsync<$modelName$>($"%{keyword.Trim()}%");
+				} else {
+					list = await Manager.SearchAsync<$modelName$>(
+						$"%{keyword.Trim()}%",
+						keyword_property.Select(x => FixPropertyCase(x)).ToArray()
+					);
+				}
+			}
+
+			// 匹配過濾
             if (!string.IsNullOrWhiteSpace(match)) {
                 ExpandoObject matchObj = new ExpandoObject();
                 $modelName$ tempMatchObj = JsonConvert.DeserializeObject<$modelName$>(match);
                 foreach (var kv in JObject.Parse(match)) {
-                    matchObj.TryAdd(kv.Key, typeof($modelName$).GetProperty(kv.Key).GetValue(tempMatchObj));
+                    matchObj.TryAdd(
+						kv.Key, 
+						typeof($modelName$).GetProperty(kv.Key).GetValue(tempMatchObj)
+					);
                 }
                 list = list.Match(matchObj);
             }
 
+			// 取得預設排序方法
             if (order == null || order.Length == 0) {
-                order = typeof($modelName$).GetCustomAttribute<DefaultOrderAttribute>()?.Properties;
+                order = typeof($modelName$)
+					.GetCustomAttribute<DefaultOrderAttribute>()
+					?.Properties;
             }
 
+			// 排序方法設定
             if (order == null || order.Length == 0) {
                 return list
                     .AsPaging(skip, take);
@@ -61,14 +104,24 @@ namespace $slnName$.Controllers {
                     .OrderBy(
                         order.Select(x => {
                             if (x[0] == '-') {
-                                return (isDec: true, name: x.Substring(1));
+                                return (isDec: true, name: FixPropertyCase(x.Substring(1)));
                             } else {
-                                return (isDec: false, name: x);
+                                return (isDec: false, name: FixPropertyCase(x));
                             }
                         }).ToArray()
                     )
                     .AsPaging(skip, take);
             }
+        }
+		
+        /// <summary>
+        /// 判斷指定實例是否存在
+        /// </summary>
+        /// <param name="id">唯一識別號</param>
+        /// <returns>是否存在</returns>
+        [HttpGet("{id}/exists")]
+		public Task<bool> Exists(object id) {
+            return Manager.ExistsAsync<$modelName$>(id);
         }
 
         /// <summary>
