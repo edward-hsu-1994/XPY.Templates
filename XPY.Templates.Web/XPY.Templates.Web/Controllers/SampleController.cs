@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using $safeprojectname$.Base.Authorization;
 using $safeprojectname$.Base.Mvc;
 using $safeprojectname$.Logic;
@@ -14,7 +15,9 @@ using XWidget.Web.Jwt;
 
 namespace $safeprojectname$.Controllers {
     public class SampleController : BaseController<$lastnamespace$Manager, $lastnamespace$Context> {
-    public SampleController($lastnamespace$Manager manager) : base(manager) {
+    public SampleController(
+        $lastnamespace$Manager manager,
+        ILogger<SampleController> logger) : base(manager, logger) {
 
     }
 
