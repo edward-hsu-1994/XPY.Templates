@@ -73,6 +73,9 @@ namespace $safeprojectname$ {
         // 註冊Swagger產生器
         services.AddSwagger();
 
+        // 日誌紀錄器
+        services.AddLogging();
+
         // 設定SPA根目錄
         services.AddSpaStaticFiles(options => {
             options.RootPath = "./wwwroot";
