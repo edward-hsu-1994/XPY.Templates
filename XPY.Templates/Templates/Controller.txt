@@ -14,32 +14,32 @@ using Newtonsoft.Json.Linq;
 using XWidget.Web.Jwt;
 using XWidget.Web.Exceptions;
 using XWidget.Linq;
-using $slnName$.Base.Authorization;
-using $slnName$.Base.Mvc;
-using $slnName$.Logic;
-using $slnName$.Models.EF;
-using $slnName$.Models.EF.Attributes;
+using @(ViewBag.SlnName).Base.Authorization;
+using @(ViewBag.SlnName).Base.Mvc;
+using @(ViewBag.SlnName).Logic;
+using @(ViewBag.SlnName).Models.EF;
+using @(ViewBag.SlnName).Models.EF.Attributes;
 
-namespace $slnName$.Controllers {
-    public class $modelName$Controller : BaseController<$lastnamespace$Manager, $lastnamespace$Context> {
-        public $modelName$Controller(
-			$lastnamespace$Manager manager,
-			ILogger<$modelName$Controller> logger) : base(manager, logger) {
+namespace @(ViewBag.SlnName).Controllers {
+    public class @(ViewBag.ModelName)Controller : BaseController<@(ViewBag.lastnamespace)Manager, @(ViewBag.lastnamespace)Context> {
+        public @(ViewBag.ModelName)Controller(
+            @(ViewBag.lastnamespace)Manager manager,
+            ILogger<@(ViewBag.ModelName)Controller> logger) : base(manager, logger) {
 
         }
 
         /// <summary>
         /// 取得列表分頁結果
         /// </summary>
-		/// <param name="keyword">關鍵字</param>
-		/// <param name="keyword_property">關鍵字</param>
+        /// <param name="keyword">關鍵字</param>
+        /// <param name="keyword_property">關鍵字</param>
         /// <param name="match">匹配模式(JSON格式)</param>
         /// <param name="order">排序方法</param>
         /// <param name="skip">起始索引</param>
         /// <param name="take">取得筆數</param>
         /// <returns>分頁結果</returns>
         [HttpGet]
-        public async Task<Paging<$modelName$>> List(
+        public async Task<Paging<@(ViewBag.ModelName)>> List(
 		    [FromQuery]string keyword = null,
 			[FromQuery]string[] keyword_property = null,
             [FromQuery]string match = null,
@@ -49,7 +49,7 @@ namespace $slnName$.Controllers {
 			#region 修正排序屬性大小寫問題
 			string FixPropertyCase(string property) {
                 var propertyInfo =
-                    typeof($modelName$).GetProperty(
+                    typeof(@(ViewBag.ModelName)).GetProperty(
                         property,
                         BindingFlags.Instance | BindingFlags.Public | BindingFlags.IgnoreCase);
 
@@ -61,17 +61,17 @@ namespace $slnName$.Controllers {
             }
 			#endregion
 
-            IQueryable<$modelName$> list = null;
+            IQueryable<@(ViewBag.ModelName)> list = null;
 
 			// 關鍵字搜尋判斷
 			if (string.IsNullOrWhiteSpace(keyword)) {
-				list = await Manager.ListAsync<$modelName$>();
+				list = await Manager.ListAsync<@(ViewBag.ModelName)>();
 			} else {
 				// 搜尋屬性範圍
 				if (keyword_property == null || keyword_property.Length == 0) {
-					list = await Manager.SearchAsync<$modelName$>($"%{keyword.Trim()}%");
+					list = await Manager.SearchAsync<@(ViewBag.ModelName)>($"%{keyword.Trim()}%");
 				} else {
-					list = await Manager.SearchAsync<$modelName$>(
+					list = await Manager.SearchAsync<@(ViewBag.ModelName)>(
 						$"%{keyword.Trim()}%",
 						keyword_property.Select(x => FixPropertyCase(x)).ToArray()
 					);
@@ -81,11 +81,11 @@ namespace $slnName$.Controllers {
 			// 匹配過濾
             if (!string.IsNullOrWhiteSpace(match)) {
                 ExpandoObject matchObj = new ExpandoObject();
-                $modelName$ tempMatchObj = JsonConvert.DeserializeObject<$modelName$>(match);
+                @(ViewBag.ModelName) tempMatchObj = JsonConvert.DeserializeObject<@(ViewBag.ModelName)>(match);
                 foreach (var kv in JObject.Parse(match)) {
                     matchObj.TryAdd(
-						kv.Key, 
-						typeof($modelName$).GetProperty(kv.Key).GetValue(tempMatchObj)
+						kv.Key,
+						typeof(@(ViewBag.ModelName)).GetProperty(kv.Key).GetValue(tempMatchObj)
 					);
                 }
                 list = list.Match(matchObj);
@@ -93,7 +93,7 @@ namespace $slnName$.Controllers {
 
 			// 取得預設排序方法
             if (order == null || order.Length == 0) {
-                order = typeof($modelName$)
+                order = typeof(@(ViewBag.ModelName))
 					.GetCustomAttribute<DefaultOrderAttribute>()
 					?.Properties;
             }
@@ -116,7 +116,7 @@ namespace $slnName$.Controllers {
                     .AsPaging(skip, take);
             }
         }
-		
+
         /// <summary>
         /// 判斷指定實例是否存在
         /// </summary>
@@ -124,7 +124,7 @@ namespace $slnName$.Controllers {
         /// <returns>是否存在</returns>
         [HttpGet("{id}/exists")]
 		public Task<bool> Exists(object id) {
-            return Manager.ExistsAsync<$modelName$>(id);
+            return Manager.ExistsAsync<@(ViewBag.ModelName)>(id);
         }
 
         /// <summary>
@@ -133,9 +133,9 @@ namespace $slnName$.Controllers {
         /// <param name="id">唯一識別號</param>
         /// <returns>目標實例</returns>
         [HttpGet("{id}")]
-        public async Task<$modelName$> Get(
+        public async Task<@(ViewBag.ModelName)> Get(
             [FromRoute]object id) {
-            return await Manager.GetAsync<$modelName$>(id);
+            return await Manager.GetAsync<@(ViewBag.ModelName)>(id);
         }
 
         /// <summary>
@@ -144,8 +144,8 @@ namespace $slnName$.Controllers {
         /// <param name="instance">實例內容</param>
         /// <returns>新實例</returns>
         [HttpPost]
-        public async Task<$modelName$> Create(
-            [FromBody]$modelName$ instance) {
+        public async Task<@(ViewBag.ModelName)> Create(
+            [FromBody]@(ViewBag.ModelName) instance) {
             return await Manager.CreateAsync(instance);
         }
 
@@ -155,8 +155,8 @@ namespace $slnName$.Controllers {
         /// <param name="instance">實例內容</param>
         /// <returns>更新後的實例</returns>
         [HttpPut]
-        public async Task<$modelName$> Update(
-            [FromBody]$modelName$ instance) {
+        public async Task<@(ViewBag.ModelName)> Update(
+            [FromBody]@(ViewBag.ModelName) instance) {
             return await Manager.UpdateAsync(instance);
         }
 
@@ -167,7 +167,7 @@ namespace $slnName$.Controllers {
         /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task Delete(object id) {
-            await Manager.DeleteAsync<$modelName$>(id);
+            await Manager.DeleteAsync<@(ViewBag.ModelName)>(id);
         }
     }
 }

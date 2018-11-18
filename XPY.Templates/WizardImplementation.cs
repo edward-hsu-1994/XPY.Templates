@@ -10,6 +10,9 @@ using EnvDTE;
 using EnvDTE80;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.TemplateWizard;
+using RazorEngine;
+using RazorEngine.Templating; // For extension methods.
+using Engine = RazorEngine.Engine;
 
 namespace XPY.Templates.Web.Wizard {
     public class WizardImplementation : IWizard {
@@ -72,12 +75,17 @@ namespace XPY.Templates.Web.Wizard {
                             continue;
                         }
 
-                        var output = template;
+                        var viewBag = new DynamicViewBag();
                         foreach (var kv in replacementsDictionary) {
-                            output = output.Replace(kv.Key, kv.Value);
+                            viewBag.AddValue(kv.Key.Replace("$", ""), kv.Value);
                         }
-                        output = output.Replace("$modelName$", filename);
-                        output = output.Replace("$slnName$", Path.GetFileName(slnPath));
+                        viewBag.AddValue("ModelName", filename);
+                        viewBag.AddValue("SlnName", Path.GetFileName(slnPath));
+                        var output =
+                            Engine.Razor.RunCompile(
+                                template,
+                                "ControllerTemplate",
+                                viewBag: viewBag);
 
                         File.WriteAllText(Path.Combine(slnPath, Path.GetFileName(slnPath), "Controllers", $"{filename}Controller.cs"), output);
                     }
