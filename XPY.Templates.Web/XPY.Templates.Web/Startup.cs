@@ -64,8 +64,10 @@ namespace $safeprojectname$ {
 
         // 使用MVC服務
         services.AddMvc()
-            .AddJsonOptions(options => { // 設定JSON格式化選項，使用忽略LazyLoader屬性
+            .AddJsonOptions(options => {
+                // 設定JSON格式化選項，使用忽略LazyLoader屬性
                 options.SerializerSettings.ContractResolver = new IgnoreLazyLoaderContractResolver();
+                // JSON序列化忽略循環問題
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             })
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
@@ -128,6 +130,7 @@ namespace $safeprojectname$ {
             // ref: https://github.com/RSuter/NSwag/issues/869
             settings.GeneratorSettings.OperationProcessors.Add(new OperationSecurityScopeProcessor("apiKey"));
             settings.GeneratorSettings.OperationProcessors.Add(new AuthorizeOperationProcessor());
+            settings.GeneratorSettings.OperationProcessors.Add(new OptionParamProcessor());
             settings.GeneratorSettings.DocumentProcessors.Add(new SecurityDefinitionAppender("apiKey", new NSwag.SwaggerSecurityScheme() {
                 Type = NSwag.SwaggerSecuritySchemeType.ApiKey,
                 Name = "Authorization",
