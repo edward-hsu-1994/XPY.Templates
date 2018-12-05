@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,6 +21,7 @@ using Microsoft.IdentityModel.Tokens;
 using NSwag.AspNetCore;
 using NJsonSchema;
 using NSwag.SwaggerGeneration.Processors.Security;
+using XWidget.Utilities;
 using $safeprojectname$.Base.Utilities;
 using $safeprojectname$.Base.Utilities.Swagger;
 using $safeprojectname$.Logic;
@@ -82,6 +84,13 @@ namespace $safeprojectname$ {
         services.AddSpaStaticFiles(options => {
             options.RootPath = "./wwwroot";
         });
+
+        // 設定MultipartBody最大長度
+        /*
+        services.Configure<FormOptions>(options => {
+            options.MultipartBodyLengthLimit = 500 * ByteUtility.MiB;
+        });
+        */
     }
 
     /// <summary>
