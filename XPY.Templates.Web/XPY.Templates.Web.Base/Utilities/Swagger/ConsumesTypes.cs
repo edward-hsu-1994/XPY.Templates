@@ -10,14 +10,11 @@ using NSwag.SwaggerGeneration.Processors;
 using NSwag.SwaggerGeneration.Processors.Contexts;
 
 namespace $safeprojectname$.Utilities.Swagger {
-    /// <summary>
-    /// 複寫Swagger Consumes
+/// <summary>
+    /// 常用ConsumesTypes常數
     /// </summary>
-    public class OperationConsumesAttribute : SwaggerOperationProcessorAttribute {
-    public const string FormUrlEncoded = "application/x-www-form-urlencoded";
+    public static class ConsumesTypes {
+    public const string X3wFormUrlEncoded = "application/x-www-form-urlencoded";
     public const string FormData = "multipart/form-data";
-    public OperationConsumesAttribute(params string[] comsues) : base(typeof(ConsumesOperationProcessor), comsues) {
-
-    }
 }
 }
