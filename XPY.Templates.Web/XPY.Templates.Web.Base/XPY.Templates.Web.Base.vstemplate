@@ -26,8 +26,8 @@
       <Folder Name="Utilities" TargetFolderName="Utilities">
         <Folder Name="Swagger" TargetFolderName="Swagger">
           <ProjectItem ReplaceParameters="true" TargetFileName="AuthorizeOperationProcessor.cs">AuthorizeOperationProcessor.cs</ProjectItem>
-          <ProjectItem ReplaceParameters="true" TargetFileName="ConsumesOperationProcessor.cs">ConsumesOperationProcessor.cs</ProjectItem>
-          <ProjectItem ReplaceParameters="true" TargetFileName="ConsumesOperationProcessorAttribute.cs">ConsumesOperationProcessorAttribute.cs</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="ConsumesAttributeProcessor.cs">ConsumesAttributeProcessor.cs</ProjectItem>
+          <ProjectItem ReplaceParameters="true" TargetFileName="ConsumesTypes.cs">ConsumesTypes.cs</ProjectItem>
           <ProjectItem ReplaceParameters="true" TargetFileName="OptionParamProcessor.cs">OptionParamProcessor.cs</ProjectItem>
           <ProjectItem ReplaceParameters="true" TargetFileName="SummaryOperationProcessor.cs">SummaryOperationProcessor.cs</ProjectItem>
         </Folder>

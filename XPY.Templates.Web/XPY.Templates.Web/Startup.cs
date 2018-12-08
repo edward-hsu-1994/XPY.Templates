@@ -140,6 +140,7 @@ namespace $safeprojectname$ {
             settings.GeneratorSettings.OperationProcessors.Add(new OperationSecurityScopeProcessor("apiKey"));
             settings.GeneratorSettings.OperationProcessors.Add(new AuthorizeOperationProcessor());
             settings.GeneratorSettings.OperationProcessors.Add(new OptionParamProcessor());
+            settings.GeneratorSettings.OperationProcessors.Add(new ConsumesAttributeProcessor());
             settings.GeneratorSettings.DocumentProcessors.Add(new SecurityDefinitionAppender("apiKey", new NSwag.SwaggerSecurityScheme() {
                 Type = NSwag.SwaggerSecuritySchemeType.ApiKey,
                 Name = "Authorization",
