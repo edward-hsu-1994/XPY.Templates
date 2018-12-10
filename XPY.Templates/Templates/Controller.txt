@@ -123,7 +123,7 @@ namespace @(ViewBag.SlnName).Controllers {
         /// <param name="id">唯一識別號</param>
         /// <returns>是否存在</returns>
         [HttpGet("{id}/exists")]
-		public Task<bool> Exists(object id) {
+		public Task<bool> Exists(@(ViewBag.ModelKeyType) id) {
             return Manager.ExistsAsync<@(ViewBag.ModelName)>(id);
         }
 
@@ -134,7 +134,7 @@ namespace @(ViewBag.SlnName).Controllers {
         /// <returns>目標實例</returns>
         [HttpGet("{id}")]
         public async Task<@(ViewBag.ModelName)> Get(
-            [FromRoute]object id) {
+            [FromRoute]@(ViewBag.ModelKeyType) id) {
             return await Manager.GetAsync<@(ViewBag.ModelName)>(id);
         }
 
@@ -166,7 +166,7 @@ namespace @(ViewBag.SlnName).Controllers {
         /// <param name="id">唯一識別號</param>
         /// <returns></returns>
         [HttpDelete("{id}")]
-        public async Task Delete(object id) {
+        public async Task Delete(@(ViewBag.ModelKeyType) id) {
             await Manager.DeleteAsync<@(ViewBag.ModelName)>(id);
         }
     }
