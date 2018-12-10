@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using EnvDTE;
@@ -81,6 +82,31 @@ namespace XPY.Templates.Web.Wizard {
                         }
                         viewBag.AddValue("ModelName", filename);
                         viewBag.AddValue("SlnName", Path.GetFileName(slnPath));
+
+
+                        #region Get Id Type
+                        var modelClass = File.ReadAllText(model);
+
+                        Regex propertyRegex = new Regex(@"(?>public|internal)\s+(?!class)((virtual|static|readonly)\s)?(?<Type>[^\s]+)\s+(?<Name>[^\s]+)");
+
+                        var properties = propertyRegex.Matches(modelClass);
+
+                        bool hasKeyType = false;
+                        foreach (Match property in properties) {
+                            if (property.Groups["Name"].Value?.ToUpper() == "Id".ToUpper()) {
+                                viewBag.AddValue("ModelKeyType", property.Groups["Type"].Value);
+                                hasKeyType = true;
+
+                                break;
+                            }
+                        }
+
+                        if (!hasKeyType) {
+                            viewBag.AddValue("ModelKeyType", "object");
+                        }
+                        #endregion
+
+
                         var output =
                             Engine.Razor.RunCompile(
                                 template,
