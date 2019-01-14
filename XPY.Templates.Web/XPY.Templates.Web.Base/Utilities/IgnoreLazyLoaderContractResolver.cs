@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Linq;
+using System.Collections.Generic;
 using System.Reflection;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using XWidget.Web;
 
 namespace $safeprojectname$.Utilities {
     /// <summary>
@@ -11,21 +13,15 @@ namespace $safeprojectname$.Utilities {
     /// </summary>
     public class IgnoreLazyLoaderContractResolver : CamelCasePropertyNamesContractResolver {
 
-        public IgnoreLazyLoaderContractResolver() {
-        }
-
-        protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization) {
-            if (member is PropertyInfo property) {
-                if (property.PropertyType == typeof(ILazyLoader) ||
-                       property.PropertyType.GetInterfaces().Contains(typeof(ILazyLoader))) {
-                    JsonProperty prop = base.CreateProperty(member, memberSerialization);
-                    prop.Ignored = true;
-
-                    return prop;
-                }
-            }
-
-            return base.CreateProperty(member, memberSerialization);
-        }
+    public IgnoreLazyLoaderContractResolver() {
     }
+
+    protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization) {
+        return this.CreatePropertiesWithModelMetadataType(type, memberSerialization);
+    }
+
+    protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization) {
+        return this.CreatePropertyWithIgnoreLazyLoader(member, memberSerialization);
+    }
+}
 }
