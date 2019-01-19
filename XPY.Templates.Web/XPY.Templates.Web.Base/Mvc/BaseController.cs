@@ -5,8 +5,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Primitives;
+using Microsoft.IdentityModel.Tokens;
 using XWidget.EFLogic;
 using XWidget.Web.Exceptions;
+using XWidget.Web.Jwt;
 
 namespace $safeprojectname$.Mvc {
     /// <summary>
@@ -58,6 +61,25 @@ public class BaseController<TManager, TContext> : Controller
             }
         }
         base.OnActionExecuted(context);
+    }
+
+    /// <summary>
+    /// 取得Authorization中的JWT資訊
+    /// </summary>
+    /// <typeparam name="TToken">JWT類型</typeparam>
+    /// <typeparam name="TJwtHeader">JWT標頭</typeparam>
+    /// <typeparam name="TJwtPayload">JWT酬載</typeparam>
+    /// <returns>JWT資訊</returns>
+    public TToken GetJwtToken<TToken, TJwtHeader, TJwtPayload>()
+        where TToken : class, IJwtToken<TJwtHeader, TJwtPayload>
+        where TJwtHeader : IJwtHeader {
+        if (Request.Headers.TryGetValue("Authorization", out StringValues tokenString)) {
+            if (JwtTokenConvert.Verify<TToken, TJwtHeader, TJwtPayload>(tokenString, default(TokenValidationParameters), out var token)) {
+                return token;
+            }
+            return default(TToken);
+        }
+        return default(TToken);
     }
 }
 }
