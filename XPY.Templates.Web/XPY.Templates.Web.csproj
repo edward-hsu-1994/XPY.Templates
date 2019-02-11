@@ -76,7 +76,6 @@
     <None Include="XPY.Templates.Web.Base\Authorization\JwtAuthenticationExtension.cs" />
     <None Include="XPY.Templates.Web.Base\Authorization\SpecificSolutionNameToken.cs" />
     <None Include="XPY.Templates.Web.Base\Mvc\BaseController.cs" />
-    <None Include="XPY.Templates.Web.Base\Utilities\IgnoreLazyLoaderContractResolver.cs" />
     <None Include="XPY.Templates.Web\Controllers\SampleController.cs" />
     <None Include="XPY.Templates.Web\Program.cs" />
     <None Include="XPY.Templates.Web\Properties\launchSettings.json" />

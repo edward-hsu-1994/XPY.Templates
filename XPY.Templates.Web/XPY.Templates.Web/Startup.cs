@@ -22,6 +22,7 @@ using NSwag.AspNetCore;
 using NJsonSchema;
 using NSwag.SwaggerGeneration.Processors.Security;
 using XWidget.Utilities;
+using XWidget.Web;
 using $safeprojectname$.Base.Utilities;
 using $safeprojectname$.Base.Utilities.Swagger;
 using $safeprojectname$.Logic;
@@ -68,14 +69,30 @@ namespace $safeprojectname$ {
         services.AddMvc()
             .AddJsonOptions(options => {
                 // 設定JSON格式化選項，使用忽略LazyLoader屬性
-                options.SerializerSettings.ContractResolver = new IgnoreLazyLoaderContractResolver();
+                options.SerializerSettings.ContractResolver = new CommonContractResolver();
                 // JSON序列化忽略循環問題
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             })
-            .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
         // 註冊Swagger產生器
-        services.AddSwagger();
+        services.AddSwaggerDocument(config => {
+            config.Title = Configuration.GetSection("Swagger:Name").Value;
+            config.Description = Configuration.GetSection("Swagger:Description").Value;
+            config.Version = Assembly.GetEntryAssembly().GetName().Version.ToString();
+
+            // ref: https://github.com/RSuter/NSwag/issues/869
+            config.OperationProcessors.Add(new OperationSecurityScopeProcessor("apiKey"));
+            config.OperationProcessors.Add(new AuthorizeOperationProcessor());
+            config.OperationProcessors.Add(new OptionParamProcessor());
+            config.OperationProcessors.Add(new ConsumesAttributeProcessor());
+            config.DocumentProcessors.Add(new SecurityDefinitionAppender("apiKey", new NSwag.SwaggerSecurityScheme() {
+                Type = NSwag.SwaggerSecuritySchemeType.ApiKey,
+                Name = "Authorization",
+                In = NSwag.SwaggerSecurityApiKeyLocation.Header,
+                Description = "JWT(Bearer) 存取權杖"
+            }));
+        });
 
         // 日誌紀錄器
         services.AddLogging();
@@ -128,26 +145,8 @@ namespace $safeprojectname$ {
 
         #region Swagger UI
         // 使用Swagger UI並搭配API探索器
-        app.UseSwaggerUi3WithApiExplorer(settings => {
-            settings.GeneratorSettings.DefaultPropertyNameHandling =
-                PropertyNameHandling.CamelCase;
-
-            settings.GeneratorSettings.Title = Configuration.GetSection("Swagger:Name").Value;
-            settings.GeneratorSettings.Description = Configuration.GetSection("Swagger:Description").Value;
-            settings.GeneratorSettings.Version = Assembly.GetEntryAssembly().GetName().Version.ToString();
-
-            // ref: https://github.com/RSuter/NSwag/issues/869
-            settings.GeneratorSettings.OperationProcessors.Add(new OperationSecurityScopeProcessor("apiKey"));
-            settings.GeneratorSettings.OperationProcessors.Add(new AuthorizeOperationProcessor());
-            settings.GeneratorSettings.OperationProcessors.Add(new OptionParamProcessor());
-            settings.GeneratorSettings.OperationProcessors.Add(new ConsumesAttributeProcessor());
-            settings.GeneratorSettings.DocumentProcessors.Add(new SecurityDefinitionAppender("apiKey", new NSwag.SwaggerSecurityScheme() {
-                Type = NSwag.SwaggerSecuritySchemeType.ApiKey,
-                Name = "Authorization",
-                In = NSwag.SwaggerSecurityApiKeyLocation.Header,
-                Description = "JWT(Bearer) 存取權杖"
-            }));
-        });
+        app.UseSwagger();
+        app.UseSwaggerUi3();
         #endregion
 
         // 使用靜態檔案
