@@ -31,7 +31,6 @@
           <ProjectItem ReplaceParameters="true" TargetFileName="OptionParamProcessor.cs">OptionParamProcessor.cs</ProjectItem>
           <ProjectItem ReplaceParameters="true" TargetFileName="SummaryOperationProcessor.cs">SummaryOperationProcessor.cs</ProjectItem>
         </Folder>
-        <ProjectItem ReplaceParameters="true" TargetFileName="IgnoreLazyLoaderContractResolver.cs">IgnoreLazyLoaderContractResolver.cs</ProjectItem>
       </Folder>
     </Project>
   </TemplateContent>
