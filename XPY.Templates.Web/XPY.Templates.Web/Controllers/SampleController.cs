@@ -11,6 +11,7 @@ using $safeprojectname$.Base.Authorization;
 using $safeprojectname$.Base.Mvc;
 using $safeprojectname$.Logic;
 using $safeprojectname$.Models.EF;
+using $safeprojectname$.Configuration;
 using XWidget.Web.Jwt;
 
 namespace $safeprojectname$.Controllers {
@@ -33,18 +34,18 @@ namespace $safeprojectname$.Controllers {
             },
                 Payload = new MvcIdentityPayload() {
                     Actor = userId,
-                    Issuer = Startup.Configuration.GetSection("JWT:Issuer").Value,
-                    Audience = Startup.Configuration.GetSection("JWT:Audience").Value,
+                    Issuer = $lastnamespace$Configuration.Instance.JWT.Issuer,
+                    Audience = $lastnamespace$Configuration.Instance.JWT.Audience,
                     Name = userId,
-                    Role = $lastnamespace$Token.Roles.Administrator,
+                    Role = $lastnamespace$Token.Roles.Default,
                     Subject = $lastnamespace$Token.Subjects.Login,
                     IssuedAt = DateTime.Now,
-                    Expires = DateTime.Now.AddSeconds(Startup.Configuration.GetSection("JWT").GetValue<int>("Expires"))
+                    Expires = DateTime.Now.AddSeconds($lastnamespace$Configuration.Instance.JWT.Expires)
                 }
             };
 
-        var key = new SymmetricSecurityKey(Startup.Configuration.GetSection("JWT:SecureKey")
-            .Value.ToHash<MD5>()
+        var key = new SymmetricSecurityKey(
+            $lastnamespace$Configuration.Instance.JWT.SecureKey.ToHash<MD5>()
         );
 
         return tokenModel.Sign(key);

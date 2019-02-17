@@ -17,6 +17,9 @@
       <ProjectTemplateLink  ProjectName="$safeprojectname$.Logic" CopyParameters="true">
         XPY.Templates.Web.Logic\XPY.Templates.Web.Logic.vstemplate
       </ProjectTemplateLink>
+      <ProjectTemplateLink ProjectName="$safeprojectname$.Configuration" CopyParameters="true">
+        XPY.Templates.Web.Configuration\XPY.Templates.Web.Configuration.vstemplate
+      </ProjectTemplateLink>
       <ProjectTemplateLink  ProjectName="$safeprojectname$.Models.EF" CopyParameters="true">
         XPY.Templates.Web.Models.EF\XPY.Templates.Web.Models.EF.vstemplate
       </ProjectTemplateLink>
