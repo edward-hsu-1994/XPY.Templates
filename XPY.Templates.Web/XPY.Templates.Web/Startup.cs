@@ -27,6 +27,7 @@ using $safeprojectname$.Base.Utilities;
 using $safeprojectname$.Base.Utilities.Swagger;
 using $safeprojectname$.Logic;
 using $safeprojectname$.Models.EF;
+using $safeprojectname$.Configuration;
 
 namespace $safeprojectname$ {
     /// <summary>
@@ -34,13 +35,8 @@ namespace $safeprojectname$ {
     /// </summary>
     public class Startup {
     public Startup(IConfiguration configuration) {
-        Configuration = configuration;
+        configuration.Bind($lastnamespace$Configuration.Instance);
     }
-
-    /// <summary>
-    /// 設定值
-    /// </summary>
-    public static IConfiguration Configuration { get; private set; }
 
     /// <summary>
     /// 服務設定方法，這個方法用以設定新增服務至服務容器
@@ -52,18 +48,18 @@ namespace $safeprojectname$ {
             options.UseLazyLoadingProxies();
             // 此處選擇使用個別專案的資料庫連線提供者
             $if$ ( $efProvider$ == PostgreSQL )
-             options.UseNpgsql(Configuration.GetConnectionString("default"));
+             options.UseNpgsql($lastnamespace$Configuration.Instance.ConnectionStrings.Default);
             $endif$
             $if$ ( $efProvider$ == MSSQL )
-             options.UseSqlServer(Configuration.GetConnectionString("default"));
+             options.UseSqlServer($lastnamespace$Configuration.Instance.ConnectionStrings.Default);
             $endif$
         }).AddFromDbContext("Id");
 
         // 使用認證
         services.AddJwtAuthentication(
-            secureKey: Configuration.GetSection("JWT:SecureKey").Value,
-            issuer: Configuration.GetSection("JWT:Issuer").Value,
-            audience: Configuration.GetSection("JWT:Audience").Value);
+            secureKey: $lastnamespace$Configuration.Instance.JWT.SecureKey,
+            issuer: $lastnamespace$Configuration.Instance.JWT.Issuer,
+            audience: $lastnamespace$Configuration.Instance.JWT.Audience);
 
         // 使用MVC服務
         services.AddMvc()
@@ -77,8 +73,8 @@ namespace $safeprojectname$ {
 
         // 註冊Swagger產生器
         services.AddSwaggerDocument(config => {
-            config.Title = Configuration.GetSection("Swagger:Name").Value;
-            config.Description = Configuration.GetSection("Swagger:Description").Value;
+            config.Title = $lastnamespace$Configuration.Instance.Swagger.Name;
+            config.Description = $lastnamespace$Configuration.Instance.Swagger.Description;
             config.Version = Assembly.GetEntryAssembly().GetName().Version.ToString();
 
             // ref: https://github.com/RSuter/NSwag/issues/869

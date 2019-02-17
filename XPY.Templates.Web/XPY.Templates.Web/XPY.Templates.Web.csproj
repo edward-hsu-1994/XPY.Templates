@@ -28,6 +28,7 @@
   <ItemGroup>
     <ProjectReference Include="..\$ext_safeprojectname$.Base\$ext_safeprojectname$.Base.csproj" />
     <ProjectReference Include="..\$ext_safeprojectname$.Logic\$ext_safeprojectname$.Logic.csproj" />
+    <ProjectReference Include="..\$ext_safeprojectname$.Configuration\$ext_safeprojectname$.Configuration.csproj" />
   </ItemGroup>
 
 </Project>

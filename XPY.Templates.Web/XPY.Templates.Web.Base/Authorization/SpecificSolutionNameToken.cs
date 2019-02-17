@@ -23,6 +23,11 @@ namespace $safeprojectname$.Authorization {
 /// </summary>
 public static class Roles {
     /// <summary>
+    /// 預設
+    /// </summary>
+    public const string Default = "Default";
+
+    /// <summary>
     /// 系統管理員
     /// </summary>
     public const string Administrator = "Administrator";
