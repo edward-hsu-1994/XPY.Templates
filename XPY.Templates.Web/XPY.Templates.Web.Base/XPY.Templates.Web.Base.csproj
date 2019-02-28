@@ -20,11 +20,11 @@
     <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="NSwag.AspNetCore" Version="12.0.13" />
-    <PackageReference Include="XWidget.Cryptography" Version="1.6.6" />
-    <PackageReference Include="XWidget.Web.Exceptions" Version="1.6.6" />
-    <PackageReference Include="XWidget.Web.Jwt" Version="1.6.6" />
-    <PackageReference Include="XWidget.Web" Version="1.6.6" />
-    <PackageReference Include="XWidget.Linq" Version="1.6.6" />
+    <PackageReference Include="XWidget.Cryptography" Version="1.7.0" />
+    <PackageReference Include="XWidget.Web.Exceptions" Version="1.7.0" />
+    <PackageReference Include="XWidget.Web.Jwt" Version="1.7.0" />
+    <PackageReference Include="XWidget.Web" Version="1.7.0" />
+    <PackageReference Include="XWidget.Linq" Version="1.7.0" />
   </ItemGroup>
 
   <ItemGroup>
